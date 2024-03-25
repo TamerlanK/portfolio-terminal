@@ -1,0 +1,6 @@
+export { default as Terminal } from "./Terminal"
+export { default as TerminalHeader } from "./TerminalHeader"
+export { default as Contact } from "./Contact"
+export { default as Skills } from "./Skills"
+export { default as Help } from "./Help"
+export { default as Projects } from "./Projects"

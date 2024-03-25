@@ -1,61 +1,18 @@
-import React, { useState, useRef, useEffect } from "react"
-import Contact from "./Contact"
-import Projects from "./Projects"
-import Skills from "./Skills"
-import { COMMANDS, commands } from "../lib/commands"
-import { CommandType } from "../lib/commands"
-import Help from "./Help"
+import React, { useEffect, useRef } from "react"
+import useTerminalInput from "../hooks/useTerminalInput"
+import useCommandExecution from "../hooks/useCommandExecution"
+import { commands } from "../lib/commands"
 
 const Terminal: React.FC = () => {
-  const [input, setInput] = useState<string>("")
-  const [output, setOutput] = useState<JSX.Element[]>([])
+  const { input, clearInput, handleInputChange, handleTabPress } =
+    useTerminalInput()
+  const { output, handleCommand } = useCommandExecution()
   const terminalRef = useRef<HTMLDivElement>(null)
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value)
-  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     handleCommand(input.trim())
-    setInput("")
-  }
-
-  const handleCommand = (command: CommandType["name"] | string) => {
-    let newOutput = [...output]
-
-    newOutput.push(
-      <div key={output.length}>
-        🔐<span className="font-bold">@tk:~</span>$ {command}
-      </div>
-    )
-
-    switch (command.toLowerCase()) {
-      case COMMANDS.CONTACT:
-        newOutput.push(<Contact key={output.length + 1} />)
-        break
-      case COMMANDS.SKILLS:
-        newOutput.push(<Skills key={output.length + 1} />)
-        break
-      case COMMANDS.PROJECTS:
-        newOutput.push(<Projects key={output.length + 1} />)
-        break
-      case COMMANDS.CLEAR:
-        newOutput = []
-        break
-      case COMMANDS.HELP:
-        newOutput.push(<Help key={output.length + 1} />)
-        break
-      default:
-        newOutput.push(
-          <div key={output.length + 1} className="text-red-600">
-            Command "{command}" not recognized
-          </div>
-        )
-        break
-    }
-
-    setOutput(newOutput)
+    clearInput()
   }
 
   useEffect(() => {
@@ -63,10 +20,6 @@ const Terminal: React.FC = () => {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight
     }
   }, [output])
-
-  useEffect(() => {
-    handleCommand(COMMANDS.HELP)
-  }, [])
 
   const placeholderText = commands.map((cmd) => cmd.name).join(", ")
 
@@ -84,7 +37,13 @@ const Terminal: React.FC = () => {
         <input
           type="text"
           value={input}
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Tab") {
+              e.preventDefault()
+              handleTabPress()
+            }
+          }}
           placeholder={placeholderText}
           className="bg-transparent text-green-400 outline-none border-none flex-1 ml-2"
           autoFocus
