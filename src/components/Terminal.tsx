@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
-import useTerminalInput from "../hooks/useTerminalInput"
 import useCommandExecution from "../hooks/useCommandExecution"
+import useTerminalInput from "../hooks/useTerminalInput"
 import { commands } from "../lib/commands"
 
 const Terminal: React.FC = () => {
@@ -16,10 +16,11 @@ const Terminal: React.FC = () => {
   }
 
   useEffect(() => {
-    if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight
+    const terminal = terminalRef.current
+    if (terminal) {
+      terminal.scrollTop = terminal.scrollHeight
     }
-  }, [output])
+  }, [terminalRef.current?.scrollHeight])
 
   const placeholderText = commands.map((cmd) => cmd.name).join(", ")
 
