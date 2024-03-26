@@ -80,9 +80,11 @@ const useTerminalInput = () => {
           handleTabPress()
           break
         case "ArrowUp":
+          event.preventDefault()
           handleArrowUpPress()
           break
         case "ArrowDown":
+          event.preventDefault()
           handleArrowDownPress()
           break
         default:
