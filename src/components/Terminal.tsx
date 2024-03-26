@@ -1,31 +1,40 @@
-import React, { useEffect, useRef } from "react"
+import React, { useCallback, useEffect, useMemo, useRef } from "react"
 import useCommandExecution from "../hooks/useCommandExecution"
 import useTerminalInput from "../hooks/useTerminalInput"
 import { commands } from "../lib/commands"
 
 const Terminal: React.FC = () => {
-  const { input, clearInput, handleInputChange, handleTabPress } =
+  const { input, clearInput, handleInputChange, handleKeyDown, addToHistory } =
     useTerminalInput()
   const { output, handleCommand } = useCommandExecution()
   const terminalRef = useRef<HTMLDivElement>(null)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    handleCommand(input.trim())
-    clearInput()
-  }
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      if (input.trim() !== "") {
+        handleCommand(input.trim())
+        addToHistory(input.trim())
+      }
+      clearInput()
+    },
+    [input, handleCommand, addToHistory, clearInput]
+  )
+
+  const placeholderText = useMemo(
+    () => commands.map((cmd) => cmd.name).join(", "),
+    []
+  )
 
   useEffect(() => {
     const terminal = terminalRef.current
     if (terminal) {
       terminal.scrollTop = terminal.scrollHeight
     }
-  }, [terminalRef.current?.scrollHeight])
-
-  const placeholderText = commands.map((cmd) => cmd.name).join(", ")
+  }, [output])
 
   return (
-    <div className="bg-black/80 backdrop-blur-sm text-green-400 p-4 pt-0 font-mono w-full h-[400px] flex flex-col">
+    <div className="bg-black/80 backdrop-blur-sm text-green-400 p-4 pt-0 font-mono w-full h-[450px] flex flex-col">
       <div ref={terminalRef} className="flex-1 overflow-y-auto">
         {output.map((element, index) => (
           <div key={index} className="mb-1">
@@ -38,13 +47,12 @@ const Terminal: React.FC = () => {
         <input
           type="text"
           value={input}
-          onChange={(e) => handleInputChange(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Tab") {
-              e.preventDefault()
-              handleTabPress()
-            }
-          }}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(e.target.value)
+          }
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+            handleKeyDown(e)
+          }
           placeholder={placeholderText}
           className="bg-transparent text-green-400 outline-none border-none flex-1 ml-2"
           autoFocus
