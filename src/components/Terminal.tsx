@@ -12,7 +12,7 @@ const Terminal: React.FC = () => {
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      if (input.trim() !== "") {
+      if (input.trim() !== ""){
         handleCommand(input.trim())
         addToHistory(input.trim())
       }

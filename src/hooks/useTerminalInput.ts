@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react"
+import { useCallback, useState } from "react"
 import { commands } from "../lib/commands"
 
 const HISTORY_SIZE = 10
@@ -14,6 +14,7 @@ const useTerminalInput = () => {
   const handleInputChange = useCallback((value: string) => {
     const trimmedValue = value.trim()
     setInput(value)
+
     const filteredCommands = commands
       .filter((cmd) => cmd.name.startsWith(trimmedValue))
       .map((cmd) => cmd.name)
