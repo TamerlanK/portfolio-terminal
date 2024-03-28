@@ -1,13 +1,22 @@
-import { commands } from "../lib/commands"
+import { commands, CommandType, Option } from "../lib/commands"
 
 const Help = () => {
   return (
     <div>
       <h3 className="font-bold">Available commands:</h3>
       <div className="grid grid-cols-2 gap-2">
-        {commands.map((cmd, index) => (
+        {commands.map((cmd: CommandType, index: number) => (
           <div key={index}>
             <span className="font-bold">{cmd.name}</span>: {cmd.description}
+            {cmd.options && (
+              <ul>
+                {cmd.options.map((option: Option, idx: number) => (
+                  <li key={idx}>
+                    {option.option}: {option.description}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         ))}
       </div>
