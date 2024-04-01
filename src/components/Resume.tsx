@@ -1,32 +1,23 @@
 import { useEffect } from "react"
+import { downloadResume } from "../lib/utils"
+import { RESUME_URL } from "../lib/constants"
 
 type Props = {
-  option: string | undefined
+  flags: string
 }
 
-const Resume = ({ option }: Props) => {
-  const resumeUrl = "TamerlanKengerliCV.pdf"
-
-  const downloadResume = () => {
-    const link = document.createElement("a")
-    link.href = `/${resumeUrl}`
-    link.download = resumeUrl
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
-
-  const handleResumeCommand = (option: string | undefined) => {
-    if (option === "-d") {
+const Resume = ({ flags }: Props) => {
+  const handleResumeCommand = (flags: string) => {
+    if (flags?.includes("-d")) {
       downloadResume()
     } else {
-      window.open(`/${resumeUrl}`, "_blank")
+      window.open(`/${RESUME_URL}`, "_blank")
     }
   }
 
   useEffect(() => {
-    handleResumeCommand(option)
-  }, [option])
+    handleResumeCommand(flags)
+  }, [flags])
 
   return <></>
 }

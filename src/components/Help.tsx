@@ -1,4 +1,4 @@
-import { commands, CommandType, Option } from "../lib/commands"
+import { commands, CommandType, Flag } from "../lib/commands"
 
 const Help = () => {
   return (
@@ -8,11 +8,11 @@ const Help = () => {
         {commands.map((cmd: CommandType, index: number) => (
           <div key={index}>
             <span className="font-bold">{cmd.name}</span>: {cmd.description}
-            {cmd.options && (
+            {cmd.flags && (
               <ul>
-                {cmd.options.map((option: Option, idx: number) => (
+                {cmd.flags.map((flag: Flag, idx: number) => (
                   <li key={idx}>
-                    {option.option}: {option.description}
+                    {flag.flag}: {flag.description}
                   </li>
                 ))}
               </ul>

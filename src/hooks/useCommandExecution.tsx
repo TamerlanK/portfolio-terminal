@@ -5,7 +5,6 @@ import { getClosestSuggestion } from "../lib/utils"
 
 const useCommandExecution = () => {
   const [output, setOutput] = useState<JSX.Element[]>([<Help />])
-  const [suggestion, setSuggestion] = useState<string | null>(null)
 
   const handleCommand = (command: string) => {
     let newOutput: JSX.Element[] = [
@@ -15,7 +14,7 @@ const useCommandExecution = () => {
       </div>,
     ]
 
-    const [baseCommand, option] = command.split(" ")
+    const [baseCommand, flags] = command.split(" ")
 
     const exactMatch = commands.find((cmd) => cmd.name === baseCommand)
 
@@ -37,14 +36,13 @@ const useCommandExecution = () => {
           newOutput.push(<Help key={output.length + 1} />)
           break
         case COMMANDS.RESUME:
-          newOutput.push(<Resume key={output.length + 1} option={option} />)
+          newOutput.push(<Resume key={output.length + 1} flags={flags} />)
           break
         default:
           break
       }
     } else {
-      const closestSuggestion = getClosestSuggestion(command)
-      setSuggestion(closestSuggestion)
+      const closestSuggestion = getClosestSuggestion(baseCommand)
       newOutput.push(
         <div key={output.length + 1} className="text-red-600">
           Command "{command}" not recognized.

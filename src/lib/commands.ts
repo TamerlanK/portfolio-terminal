@@ -7,15 +7,15 @@ export const COMMANDS = {
   RESUME: "resume",
 } as const
 
-export type Option = {
-  option: string
+export type Flag = {
+  flag: string
   description: string
 }
 
 export type CommandType = {
   name: (typeof COMMANDS)[keyof typeof COMMANDS]
   description: string
-  options?: Option[]
+  flags?: Flag[]
 }
 
 export const commands: CommandType[] = [
@@ -27,9 +27,9 @@ export const commands: CommandType[] = [
   {
     name: COMMANDS.RESUME,
     description: "Open resume",
-    options: [
+    flags: [
       {
-        option: "-d",
+        flag: "-d",
         description: "Download Resume",
       },
     ],

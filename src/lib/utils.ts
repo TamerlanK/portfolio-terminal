@@ -1,19 +1,19 @@
 import { commands } from "./commands"
 import levenshtein from "fast-levenshtein"
+import { RESUME_URL } from "./constants"
 
-const THRESHOLD_DISTANCE = 4
+type ParsedCommand = {
+  baseCommand: string
+  flags: string[]
+}
+
+const THRESHOLD_DISTANCE = 3
 
 export const getClosestSuggestion = (command: string): string | null => {
   let closestSuggestion: string | null = null
   let minDistance = Infinity
 
-  const filteredCommands = commands.filter(
-    (cmd) =>
-      Math.abs(cmd.name.length - command.length) <= THRESHOLD_DISTANCE ||
-      cmd.name.toLowerCase().includes(command.toLowerCase())
-  )
-
-  filteredCommands.forEach((cmd) => {
+  commands.forEach((cmd) => {
     const distance = levenshtein.get(
       command.toLowerCase(),
       cmd.name.toLowerCase()
@@ -31,4 +31,22 @@ export const getClosestSuggestion = (command: string): string | null => {
   })
 
   return closestSuggestion
+}
+
+export const downloadResume = () => {
+  if (!RESUME_URL) {
+    console.error("Resume URL is not provided")
+    return
+  }
+
+  const link = document.createElement("a")
+  link.href = `/${RESUME_URL}`
+  link.download = RESUME_URL
+  link.click()
+}
+
+export const parseFlags = (command: string): ParsedCommand => {
+  const [baseCommand, ...parts] = command.trim().split(/\s+/)
+  const flags = parts.filter((part) => part.startsWith("-"))
+  return { baseCommand, flags }
 }
