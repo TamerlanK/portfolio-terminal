@@ -1,25 +1,25 @@
-import { useEffect } from "react"
-import { downloadResume } from "../lib/utils"
-import { RESUME_URL } from "../lib/constants"
+import { useEffect, useState } from "react";
+import { RESUME_URL } from "../lib/constants";
+import { downloadResume } from "../lib/utils";
 
 type Props = {
-  flags: string
-}
+  flags: string[];
+};
 
 const Resume = ({ flags }: Props) => {
-  const handleResumeCommand = (flags: string) => {
-    if (flags?.includes("-d")) {
-      downloadResume()
-    } else {
-      window.open(`/${RESUME_URL}`, "_blank")
-    }
-  }
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    handleResumeCommand(flags)
-  }, [flags])
+    if (flags.includes("-d")) {
+      downloadResume();
+    } else if (flags.length === 0) {
+      window.open(`/${RESUME_URL}`, "_blank");
+    } else {
+      setMessage("Invalid flag");
+    }
+  }, [flags]);
 
-  return <></>
-}
+  return <span className="text-red-600">{message}</span>;
+};
 
-export default Resume
+export default Resume;
