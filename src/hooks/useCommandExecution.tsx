@@ -3,7 +3,7 @@ import { Contact, Help, Projects, Resume, Skills, Welcome } from "../components"
 import { COMMANDS, commands } from "../lib/commands"
 import { getClosestSuggestion, parseFlags } from "../lib/utils"
 
-const INITIAL_OUTPUT = [<Welcome />, <Help />]
+const INITIAL_OUTPUT = [<Welcome />, <Help />].slice(1, 2)
 
 const useCommandExecution = () => {
   const [output, setOutput] = useState<JSX.Element[]>(INITIAL_OUTPUT)
