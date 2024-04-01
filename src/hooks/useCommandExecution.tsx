@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Contact, Help, Projects, Resume, Skills } from "../components"
 import { COMMANDS, commands } from "../lib/commands"
-import { getClosestSuggestion } from "../lib/utils"
+import { getClosestSuggestion, parseFlags } from "../lib/utils"
 
 const useCommandExecution = () => {
   const [output, setOutput] = useState<JSX.Element[]>([<Help />])
@@ -14,12 +14,12 @@ const useCommandExecution = () => {
       </div>,
     ]
 
-    const [baseCommand, flags] = command.split(" ")
+    const { baseCommand, flags } = parseFlags(command)
 
     const exactMatch = commands.find((cmd) => cmd.name === baseCommand)
 
-    if (exactMatch) {
-      switch (exactMatch.name.toLowerCase()) {
+    if (exactMatch?.name) {
+      switch (exactMatch.name) {
         case COMMANDS.CONTACT:
           newOutput.push(<Contact key={output.length + 1} />)
           break
