@@ -1,10 +1,12 @@
 import { useState } from "react"
-import { Contact, Help, Projects, Resume, Skills } from "../components"
+import { Contact, Help, Projects, Resume, Skills, Welcome } from "../components"
 import { COMMANDS, commands } from "../lib/commands"
 import { getClosestSuggestion, parseFlags } from "../lib/utils"
 
+const INITIAL_OUTPUT = [<Welcome />, <Help />]
+
 const useCommandExecution = () => {
-  const [output, setOutput] = useState<JSX.Element[]>([<Help />])
+  const [output, setOutput] = useState<JSX.Element[]>(INITIAL_OUTPUT)
 
   const handleCommand = (command: string) => {
     let newOutput: JSX.Element[] = [
