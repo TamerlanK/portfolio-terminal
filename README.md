@@ -37,4 +37,4 @@ This project is a modern web application that provides a terminal-style user int
 - This project is built using Vite, a blazing-fast build tool for modern web development.
 - Ensure you have Node.js installed on your system to run the project.
 - Feel free to customize and extend the application according to your requirements. You can modify the React components, add new commands, or enhance existing features.
-- If you encounter any issues or have suggestions for improvements, please open an issue on the project's GitHub repository for further discussion and assistance. -->
+- If you encounter any issues or have suggestions for improvements, please open an issue on the project's GitHub repository for further discussion and assistance.
