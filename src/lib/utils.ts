@@ -1,6 +1,6 @@
 import { commands } from "./commands"
 import levenshtein from "fast-levenshtein"
-import { RESUME_URL } from "./constants"
+import { GITHUB_URL, RESUME_URL } from "./constants"
 
 type ParsedCommand = {
   baseCommand: string
@@ -33,6 +33,8 @@ export const getClosestSuggestion = (command: string): string | null => {
   return closestSuggestion
 }
 
+export const openGithub = () => window.open(GITHUB_URL, "_blank")
+
 export const downloadResume = () => {
   if (!RESUME_URL) {
     console.error("Resume URL is not provided")
@@ -50,3 +52,4 @@ export const parseFlags = (command: string): ParsedCommand => {
   const flags = parts.filter((part) => part.startsWith("-"))
   return { baseCommand, flags }
 }
+

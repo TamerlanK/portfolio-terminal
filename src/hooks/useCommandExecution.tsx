@@ -1,15 +1,13 @@
 import { useState } from "react"
 import { Contact, Help, Projects, Resume, Skills, Welcome } from "../components"
 import { COMMANDS, commands } from "../lib/commands"
-import { getClosestSuggestion, parseFlags } from "../lib/utils"
-import { GITHUB_URL } from "../lib/constants"
+import { getClosestSuggestion, openGithub, parseFlags } from "../lib/utils"
 
 const MAX_OUTPUT_LENGTH = 20
-const INITIAL_OUTPUT = [<Welcome />, <Help />].slice(1, 2)
 
 const useCommandExecution = () => {
+  const INITIAL_OUTPUT = [<Welcome />, <Help />].slice(1, 2) //TODO!: Reset back to original array
   const [output, setOutput] = useState<JSX.Element[]>(INITIAL_OUTPUT)
-  console.log(output.length)
 
   const handleCommand = (command: string) => {
     const { baseCommand, flags } = parseFlags(command)
@@ -38,7 +36,7 @@ const useCommandExecution = () => {
           newOutput.push(<Resume key={output.length + 1} flags={flags} />)
           break
         case COMMANDS.GITHUB:
-          window.open(GITHUB_URL, "_blank")
+          openGithub()
           break
         default:
           break
