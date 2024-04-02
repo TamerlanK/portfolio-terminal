@@ -1,4 +1,5 @@
 export const RESUME_URL = "TamerlanKengerliCV.pdf"
+export const GITHUB_URL = "https://github.com/TamerlanK"
 
 export const contactDetails = {
   email: "tamerlankengerli2002@gmail.com",

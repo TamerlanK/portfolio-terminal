@@ -5,6 +5,7 @@ export const COMMANDS = {
   CLEAR: "clear",
   HELP: "help",
   RESUME: "resume",
+  GITHUB: "github",
 } as const
 
 export type Flag = {
@@ -24,6 +25,7 @@ export const commands: CommandType[] = [
   { name: COMMANDS.PROJECTS, description: "Display projects" },
   { name: COMMANDS.CLEAR, description: "Clear the terminal" },
   { name: COMMANDS.HELP, description: "Display available commands" },
+  { name: COMMANDS.GITHUB, description: "Open github profile" },
   {
     name: COMMANDS.RESUME,
     description: "Open resume",
