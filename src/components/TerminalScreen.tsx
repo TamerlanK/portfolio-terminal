@@ -15,7 +15,7 @@ const TerminalScreen: React.FC<TerminalScreenProps> = ({ output }) => {
   }, [output])
 
   return (
-    <div ref={terminalRef} className="flex-1 overflow-y-auto">
+    <div ref={terminalRef} className="flex-1 overflow-y-auto | scrollbar mt-2">
       {output.map((element, index) => (
         <div key={index} className="mb-1">
           {element}
