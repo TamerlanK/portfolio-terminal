@@ -3,7 +3,7 @@ import { commands, CommandType, Flag } from "../lib/commands"
 const Help = () => {
   return (
     <div>
-      <h3 className="font-bold text-xl mb-2">Available commands:</h3>
+      <h3 className="font-bold text-xl mb-2">Available commands</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
         {commands.map((cmd: CommandType, index: number) => (
           <div key={index}>

@@ -1,0 +1,17 @@
+export { default as css3 } from './css3.svg';
+export { default as git } from './git.svg';
+export { default as html5 } from './html5.svg';
+export { default as javascript } from './javascript.svg';
+export { default as jquery } from './jquery.svg';
+export { default as jwt } from './jwt.svg';
+export { default as markdown } from './markdown.svg';
+export { default as mongodb } from './mongodb.svg';
+export { default as mysql } from './mysql.svg';
+export { default as next } from './next.svg';
+export { default as python } from './python.svg';
+export { default as react } from './react.svg';
+export { default as redux } from './redux.svg';
+export { default as sass } from './sass.svg';
+export { default as tailwindcss } from './tailwindcss.svg';
+export { default as typescript } from './typescript.svg';
+export { default as webpack } from './webpack.svg';
