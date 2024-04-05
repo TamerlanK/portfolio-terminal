@@ -5,22 +5,26 @@ interface TerminalScreenProps {
 }
 
 const TerminalScreen: React.FC<TerminalScreenProps> = ({ output }) => {
-  const terminalRef = useRef<HTMLDivElement>(null)
+  const outputEndRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    const terminal = terminalRef.current
-    if (terminal) {
-      terminal.scrollTop = terminal.scrollHeight
+    if (outputEndRef.current) {
+      outputEndRef.current.scrollIntoView({
+        behavior: "smooth",
+      })
     }
-  }, [output])
+  })
+
+  //!TODO: Scroll to bottom when new command executes, fix scroll bug when "projects" gets executed
 
   return (
-    <div ref={terminalRef} className="flex-1 overflow-y-auto mt-2 | scrollbar ">
+    <div className="flex-1 overflow-y-auto mt-2 | scrollbar">
       {output.map((element, index) => (
         <div key={index} className="mb-1">
           {element}
         </div>
       ))}
+      <div ref={outputEndRef} />
     </div>
   )
 }

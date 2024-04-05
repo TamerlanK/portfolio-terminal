@@ -18,7 +18,6 @@ const Projects: React.FC = () => {
   }, [])
 
   if (!repos) return null
-  // TODO!: Scroll to bottom when command executes
 
   return (
     <div className="container mx-auto">
