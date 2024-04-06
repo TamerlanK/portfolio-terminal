@@ -9,7 +9,7 @@ import {
 const Contact = () => {
   return (
     <div>
-      <h3 className="text-xl font-semibold mb-2">Contact Details</h3>
+      <h3 className="text-2xl font-semibold my-1">Contact Details</h3>
       <ul className="space-y-1">
         <li className="flex items-center space-x-2">
           <AiOutlineMail className="inline-block" />
